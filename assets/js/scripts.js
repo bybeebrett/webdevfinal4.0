@@ -18,7 +18,14 @@ if ("IntersectionObserver" in window) {
         }
     );
 
-    revealElements.forEach((element) => observer.observe(element));
+    revealElements.forEach((element) => {
+        // Check if already in viewport before observing
+        if (element.getBoundingClientRect().top < window.innerHeight) {
+            element.classList.add("is-visible");
+        } else {
+            observer.observe(element);
+        }
+    });
 } else {
     revealElements.forEach((element) => element.classList.add("is-visible"));
 }
